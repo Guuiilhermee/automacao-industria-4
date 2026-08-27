@@ -346,42 +346,6 @@ Essa integração permite a conexão entre o ambiente físico e o ambiente digit
 
 ---
 
-# 🗂️ Estrutura do Projeto
-
-A organização do projeto pode ser estruturada da seguinte forma:
-
-```text
-projeto-automacao-industrial/
-│
-├── backend/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── config/
-│   └── server.js
-│
-├── frontend/
-│   ├── css/
-│   ├── js/
-│   └── views/
-│
-├── database/
-│   └── banco.sql
-│
-├── esp32/
-│   └── codigo_esteira.ino
-│
-├── arduino/
-│   └── codigo_braco_robotico.ino
-│
-├── supervisório/
-│   └── configuracoes_scadabr/
-│
-└── README.md
-```
-
----
-
 # 🚀 Objetivo do Projeto
 
 O principal objetivo deste projeto é desenvolver uma aplicação prática que demonstre a integração entre **automação industrial e tecnologia da informação**.
@@ -396,21 +360,6 @@ Através dessa integração, é possível demonstrar conceitos fundamentais da *
 * Digitalização de processos;
 * Integração entre máquinas e sistemas;
 * Monitoramento industrial.
-
----
-
-# 🔮 Próximas Implementações
-
-* [ ] Comunicação em tempo real entre ESP32 e backend;
-* [ ] Dashboard com gráficos e indicadores;
-* [ ] Estatísticas de produção;
-* [ ] Histórico de peças processadas;
-* [ ] Sistema de autenticação;
-* [ ] Controle de usuários e administradores;
-* [ ] Monitoramento em tempo real;
-* [ ] Integração completa com o ScadaBR;
-* [ ] Alertas e notificações;
-* [ ] Indicadores de desempenho do processo.
 
 ---
 
