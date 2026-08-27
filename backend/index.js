@@ -6,18 +6,15 @@ const bcrypt = require('bcryptjs')
 
 const PORT = 3000
 const hostname = 'localhost'
-
 const conn = require('./db/conn')
 
-// Importar Models para o Sequelize registrar e sincronizar
 const Peca = require('./models/Peca')
 const Usuario = require('./models/Usuario')
 
-// Importar Rotas Organizadas
 const pecaRoutes = require('./routes/peca.routes')
 const usuarioRoutes = require('./routes/usuario.routes')
 
-// MIDDLEWARES DE CORS E PARSER
+// MIDDLEWARES
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -26,14 +23,13 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-// Servir arquivos estáticos do frontend
+// Frontend
 app.use(express.static(path.join(__dirname, '../public')))
 
 // ROTAS
 app.use('/', pecaRoutes)
 app.use('/usuario', usuarioRoutes)
 
-// Função para garantir que sempre exista ao menos 1 ADM ao iniciar o banco pela primeira vez
 const criarAdmInicialSeNaoExistir = async () => {
     try {
         const totalAdm = await Usuario.count({ where: { tipoUsuario: 'adm' } })
@@ -46,9 +42,9 @@ const criarAdmInicialSeNaoExistir = async () => {
                 tipoUsuario: 'adm'
             })
             console.log('==================================================')
-            console.log('🔑 Administrador inicial criado automaticamente:')
-            console.log('📧 E-mail: admin@admin.com')
-            console.log('🔑 Senha:  admin123')
+            console.log('Administrador inicial criado automaticamente:')
+            console.log('E-mail: admin@admin.com')
+            console.log('Senha:  admin123')
             console.log('==================================================')
         }
     } catch (err) {
@@ -56,7 +52,7 @@ const criarAdmInicialSeNaoExistir = async () => {
     }
 }
 
-// SERVER & DB SYNC
+// SERVER
 conn.sync({ alter: true })
 .then(async () => {
     console.log('Tabelas (peca e usuario) sincronizadas com sucesso no MySQL!')

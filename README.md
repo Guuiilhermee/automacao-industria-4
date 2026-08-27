@@ -1,372 +1,295 @@
-# 🤖 Sistema de Automação Industrial 4.0 com Arduino, ESP32 e IoT
+# Sistema de Automação Industrial 4.0
 
-## 📋 Sobre o Projeto
+Sistema de automação industrial desenvolvido com Arduino Uno, ESP32, sensores, atuadores, backend, banco de dados, sistema web e supervisório.
 
-Este projeto consiste no desenvolvimento de um sistema didático de **automação industrial baseado nos conceitos da Indústria 4.0**, integrando automação física, sensores, microcontroladores, comunicação com sistemas web, banco de dados e supervisão industrial.
+O projeto realiza a identificação, transporte e separação automática de peças RGB.
 
-O sistema realiza a **identificação, transporte e separação automática de peças RGB**.
+## Sobre o Projeto
 
-O processo inicia com um **braço robótico controlado por Arduino Uno**, responsável por movimentar as peças de um ponto inicial até uma esteira transportadora.
+O processo é iniciado por um braço robótico controlado por um Arduino Uno, responsável por retirar a peça da área inicial e posicioná-la na esteira transportadora.
 
-A esteira é controlada por um **ESP32**, responsável pelo transporte das peças e pela leitura das características das peças através de um sensor de cor. Após a identificação da cor, o sistema realiza automaticamente a separação e o direcionamento das peças para suas respectivas caixas.
+A esteira é controlada por um ESP32, que realiza o transporte da peça e a leitura de sua cor por meio de um sensor. Após a identificação, servomotores direcionam a peça para a caixa correspondente.
 
-Além da automação física, o projeto possui integração com um sistema backend, banco de dados e frontend, permitindo o armazenamento, gerenciamento e visualização das informações das peças.
+O ESP32 também realiza a comunicação com o backend, permitindo o envio das informações do processo para armazenamento e visualização no sistema web e no supervisório.
 
----
+## Indústria 4.0
 
-## 🏭 Conceitos da Indústria 4.0 Aplicados
+O projeto aplica os seguintes conceitos:
 
-O projeto integra diferentes tecnologias relacionadas à **Indústria 4.0**, incluindo:
+* Automação industrial
+* Internet das Coisas (IoT)
+* Comunicação entre dispositivos
+* Sistemas ciberfísicos
+* Banco de dados
+* Supervisão industrial
+* Sistemas web
+* Integração entre hardware e software
+* Monitoramento de processos
+* Automação de processos
 
-* 🤖 Automação industrial;
-* 🌐 Internet das Coisas (IoT);
-* 📡 Comunicação entre dispositivos;
-* 🧠 Sistemas ciberfísicos;
-* 💾 Banco de dados;
-* 📊 Supervisão industrial;
-* 🖥️ Sistemas web;
-* 🔄 Integração entre hardware e software;
-* 📈 Monitoramento de processos industriais;
-* ⚙️ Automação de processos.
+## Funcionamento
 
-A proposta é demonstrar como equipamentos físicos podem ser integrados a sistemas digitais, permitindo a coleta, armazenamento, monitoramento e gerenciamento das informações geradas durante o processo produtivo.
+O processo ocorre nas seguintes etapas:
 
----
+1. A peça é posicionada na área de coleta.
+2. O braço robótico, controlado pelo Arduino Uno, captura a peça.
+3. A peça é posicionada na esteira.
+4. O ESP32 controla o transporte da peça.
+5. O sensor identifica a cor da peça.
+6. O sistema aciona os servomotores responsáveis pela separação.
+7. A peça é direcionada para a caixa correspondente.
+8. As informações do processo são enviadas ao backend.
+9. Os dados podem ser armazenados no MySQL e utilizados pelo frontend e pelo supervisório.
 
-## ⚙️ Funcionamento do Sistema
+## Braço Robótico
 
-O funcionamento do projeto acontece em diferentes etapas.
+O braço robótico realiza a primeira etapa do processo.
 
-Inicialmente, as peças RGB são posicionadas em uma área de coleta.
+### Funções
 
-O **braço robótico controlado pelo Arduino Uno** realiza o movimento e transporta a peça até a esteira.
+* Receber a posição da peça
+* Movimentar o braço
+* Capturar a peça
+* Transportar a peça até a esteira
+* Posicionar a peça para o processo de classificação
 
-Após receber a peça, a **esteira controlada pelo ESP32** realiza o transporte.
+### Controlador
 
-Durante o percurso, o **sensor de cor** identifica se a peça é vermelha, verde ou azul.
+* Arduino Uno
 
-Após a identificação, os mecanismos controlados por servomotores direcionam cada peça para sua respectiva caixa.
+### Componentes
 
-As informações relacionadas às peças e ao processo são enviadas pelo ESP32 para o backend, onde podem ser armazenadas no banco de dados e posteriormente disponibilizadas no sistema web e no supervisório.
+* Arduino Uno
+* Servomotores
+* Potenciômetros
+* Estrutura em MDF
 
----
+Os potenciômetros permitem realizar ajustes manuais nos movimentos dos servomotores.
 
-# 🤖 Braço Robótico
+## Esteira Transportadora
 
-O braço robótico é responsável pela primeira etapa do processo de automação.
+A esteira realiza o transporte das peças durante o processo de classificação.
 
-Sua função é:
+O controle é realizado pelo ESP32, que também é responsável pela comunicação com o backend.
 
-* Identificar ou receber a posição inicial da peça;
-* Movimentar o braço robótico;
-* Capturar a peça;
-* Transportar a peça até a esteira;
-* Posicionar a peça corretamente para o processo de classificação.
+### Controlador
 
-### 🧠 Controlador
+* ESP32
 
-* Arduino Uno.
+### Componentes
 
-### 🔩 Componentes utilizados
+* ESP32
+* Motor DC
+* Capacitor
+* Sensor de cor
+* Estrutura produzida por impressão 3D
+* Optoacoplador
+* Regulador de tensão
 
-* Arduino Uno;
-* Servomotores;
-* Potenciômetros;
-* Estrutura construída em MDF.
+## Identificação e Separação
 
-Os potenciômetros podem ser utilizados para controlar e ajustar manualmente os movimentos dos servomotores durante determinadas etapas do projeto.
+O sistema trabalha com três cores:
 
----
+* Vermelho
+* Verde
+* Azul
 
-# 🛞 Sistema de Esteira Transportadora
+O sensor de cor identifica a peça durante sua passagem pela esteira. Após a identificação, o sistema determina o destino da peça.
 
-A esteira transportadora é responsável pelo deslocamento das peças durante o processo de classificação.
+| Cor      | Destino                  |
+| -------- | ------------------------ |
+| Vermelho | Caixa de peças vermelhas |
+| Verde    | Caixa de peças verdes    |
+| Azul     | Caixa de peças azuis     |
 
-O sistema é controlado por um **ESP32**, permitindo não apenas o controle físico da esteira, mas também a comunicação com o sistema backend.
+Os servomotores acionam os mecanismos responsáveis pelo direcionamento das peças.
 
-### 🧠 Controlador
+## Comunicação com o Backend
 
-* ESP32.
+O ESP32 faz a comunicação entre o processo físico e o sistema digital.
 
-### 🔩 Componentes utilizados
+O fluxo de informações é:
 
-* ESP32;
-* Motor DC;
-* Capacitor;
-* Sensor de cor;
-* Esteira construída com componentes produzidos por impressão 3D;
-* Optoacoplador;
-* Regulador de tensão.
+**ESP32 → Backend → MySQL → Frontend / Supervisório**
 
----
+O backend recebe e processa os dados enviados pelo ESP32. As informações podem ser armazenadas no banco de dados e posteriormente utilizadas pelo sistema web e pelo supervisório.
 
-# 🎨 Identificação e Separação das Peças
+## Backend
 
-As peças utilizadas no sistema possuem três cores principais:
+O backend é responsável pelo processamento das informações e pela comunicação com o banco de dados.
 
-* 🔴 Vermelho;
-* 🟢 Verde;
-* 🔵 Azul.
+### Tecnologias
 
-O sensor de cor realiza a identificação da peça durante sua passagem pela esteira.
+* JavaScript
+* Node.js
+* Express
+* Sequelize
+* MySQL
+* CORS
 
-Após identificar a cor, o sistema determina automaticamente o destino correto da peça.
+A comunicação entre os sistemas é realizada por meio de uma API.
 
-As peças são separadas da seguinte forma:
+## Banco de Dados
 
-* 🔴 Peça vermelha → Caixa destinada às peças vermelhas;
-* 🟢 Peça verde → Caixa destinada às peças verdes;
-* 🔵 Peça azul → Caixa destinada às peças azuis.
+O sistema utiliza o MySQL para armazenamento dos dados e o Sequelize como ORM.
 
-Os servomotores são responsáveis pelo acionamento dos mecanismos utilizados para direcionar cada peça até sua respectiva caixa.
+Entre as informações armazenadas estão:
 
----
+* Nome da peça
+* Cor
+* Tipo
+* Quantidade
+* Informações relacionadas ao processo
 
-# 🌐 Comunicação entre ESP32 e Backend
+## Sistema Web
 
-O ESP32 realiza a comunicação entre o processo físico e o sistema digital.
+O sistema web permite o gerenciamento e a visualização das informações das peças.
 
-As informações geradas durante o funcionamento da esteira podem ser enviadas para o backend.
+São utilizados:
 
-O backend é responsável por receber e processar essas informações.
+* MVC
+* CRUD
+* API REST
 
-Após o processamento, os dados podem ser armazenados no banco de dados MySQL.
+### Usuário
 
-Essas informações podem ser utilizadas posteriormente pelo frontend e pelo sistema supervisório.
+O usuário possui acesso para consulta e visualização das informações.
 
-### Fluxo de informações
+Funcionalidades:
 
-**ESP32 → Backend → Banco de Dados → Frontend / Supervisório**
+* Visualizar peças
+* Consultar quantidades
+* Consultar informações
+* Acompanhar dados do processo
 
-Essa integração permite conectar os dispositivos físicos do processo industrial com sistemas digitais, sendo um dos principais conceitos aplicados no projeto.
+### Administrador
 
----
+O administrador possui acesso às operações de gerenciamento das peças.
 
-# 💻 Backend
+Funcionalidades:
 
-O backend do sistema é responsável pelo processamento das informações enviadas pelos dispositivos e pela comunicação com o banco de dados.
+* Cadastrar peças
+* Listar peças
+* Consultar peças
+* Atualizar informações
+* Excluir peças
 
-### Tecnologias utilizadas
+As operações seguem o conceito de CRUD:
 
-* JavaScript;
-* Node.js;
-* Express;
-* Sequelize;
-* MySQL;
-* CORS.
-
-O sistema utiliza uma API para permitir a comunicação entre o ESP32, backend, banco de dados e frontend.
-
----
-
-# 💾 Banco de Dados
-
-O banco de dados é responsável pelo armazenamento das informações relacionadas às peças.
-
-O projeto utiliza:
-
-* MySQL;
-* Sequelize como ORM.
-
-Entre as informações que podem ser armazenadas estão:
-
-* Nome da peça;
-* Cor da peça;
-* Tipo da peça;
-* Quantidade de peças;
-* Informações relacionadas ao processo.
-
----
-
-# 🖥️ Sistema Web
-
-O projeto possui um sistema web desenvolvido para o gerenciamento e visualização das peças utilizadas no processo industrial.
-
-O sistema utiliza conceitos como:
-
-* MVC;
-* CRUD;
-* API REST.
-
----
-
-## 👤 Usuário
-
-O usuário comum possui acesso às informações do sistema para visualização.
-
-Entre as funcionalidades disponíveis estão:
-
-* Visualizar as peças;
-* Visualizar a quantidade de peças;
-* Consultar informações disponíveis;
-* Acompanhar os dados relacionados ao processo.
-
-O usuário comum possui acesso apenas para consulta e visualização das informações.
-
----
-
-## 👨‍💻 Administrador
-
-O administrador possui acesso completo ao gerenciamento das peças.
-
-Entre as funcionalidades disponíveis estão:
-
-* ➕ Cadastrar peças;
-* 📋 Listar peças;
-* 🔎 Consultar peças;
-* ✏️ Atualizar informações;
-* 🗑️ Excluir peças.
-
-Essas funcionalidades seguem o conceito de CRUD.
-
-| Operação | Significado        |
+| Operação | Função             |
 | -------- | ------------------ |
 | Create   | Cadastrar          |
 | Read     | Consultar e listar |
 | Update   | Atualizar          |
 | Delete   | Excluir            |
 
----
+## Arquitetura MVC
 
-# 🏗️ Arquitetura MVC
-
-O sistema backend utiliza o padrão arquitetural **MVC (Model-View-Controller)**.
-
-A arquitetura é organizada da seguinte forma:
+O backend utiliza o padrão MVC (Model-View-Controller).
 
 ### Model
 
 Responsável pela comunicação e manipulação dos dados no banco de dados.
 
-No projeto, o Sequelize é utilizado para facilitar a comunicação entre a aplicação Node.js e o MySQL.
+O Sequelize é utilizado para realizar a integração entre Node.js e MySQL.
 
 ### Controller
 
 Responsável pela lógica da aplicação.
 
-Os controllers recebem as requisições, realizam as validações necessárias e utilizam os models para realizar operações no banco de dados.
+Os controllers recebem as requisições, realizam as validações e executam as operações necessárias por meio dos models.
 
 ### View
 
-Responsável pela interface apresentada ao usuário.
+Responsável pela interface utilizada pelo usuário.
 
-No projeto, o frontend permite que usuários e administradores acessem as informações e funcionalidades disponíveis no sistema.
+No projeto, o frontend disponibiliza as informações e funcionalidades para usuários e administradores.
 
----
+## Supervisório
 
-# 📊 Supervisório
+O projeto possui integração com o ScadaBR para supervisão do processo industrial.
 
-O projeto também possui integração com um sistema supervisório utilizando o **ScadaBR**.
+O supervisório pode apresentar informações como:
 
-O supervisório será utilizado para acompanhar informações relacionadas ao processo industrial.
+* Estado do sistema
+* Funcionamento da esteira
+* Informações das peças
+* Quantidade de peças processadas
+* Dados enviados pelos dispositivos
+* Processo de classificação
 
-Entre as possibilidades de monitoramento estão:
+## Alimentação
 
-* Estado do sistema;
-* Funcionamento da esteira;
-* Informações das peças;
-* Quantidade de peças processadas;
-* Dados enviados pelos dispositivos;
-* Acompanhamento do processo de classificação.
+Os componentes são alimentados por uma fonte colmeia de **5V / 10A**.
 
-O objetivo do supervisório é representar uma camada de monitoramento industrial, permitindo acompanhar informações importantes do processo de automação.
+Também são utilizados:
 
----
+* Capacitor
+* Regulador de tensão
+* Optoacoplador
 
-# 🔌 Alimentação do Sistema
+Esses componentes auxiliam na alimentação e no funcionamento dos circuitos.
 
-Os componentes do projeto são alimentados por uma:
+## Tecnologias e Componentes
 
-**Fonte colmeia 5V / 10A**
+### Software
 
-A fonte é responsável pelo fornecimento de energia para os componentes utilizados no sistema.
+* JavaScript
+* Node.js
+* Express
+* Sequelize
+* MySQL
+* CORS
+* MVC
+* CRUD
+* API REST
+* ScadaBR
 
-O projeto também utiliza componentes auxiliares para garantir o funcionamento adequado dos circuitos, incluindo:
+### Hardware
 
-* Capacitor;
-* Regulador de tensão;
-* Optoacoplador.
+* Arduino Uno
+* ESP32
+* Servomotores
+* Motor DC
+* Sensor de cor
+* Potenciômetros
+* Optoacoplador
+* Regulador de tensão
+* Capacitor
+* Fonte colmeia 5V / 10A
 
-Esses componentes auxiliam na estabilidade, proteção e adequação da alimentação dos dispositivos eletrônicos.
+### Estrutura
 
----
+* MDF
+* Impressão 3D
 
-# 🛠️ Tecnologias e Componentes
+## Integração do Sistema
 
-## 💻 Software
+O sistema integra os componentes de automação com os sistemas de software.
 
-* JavaScript;
-* Node.js;
-* Express;
-* Sequelize;
-* MySQL;
-* CORS;
-* MVC;
-* CRUD;
-* API REST;
-* ScadaBR.
+O Arduino Uno controla o braço robótico, que posiciona as peças na esteira. O ESP32 controla a esteira e realiza a leitura do sensor de cor.
 
-## 🤖 Automação e Hardware
+Após a identificação, os mecanismos de separação direcionam a peça para a caixa correspondente.
 
-* Arduino Uno;
-* ESP32;
-* Servomotores;
-* Motor DC;
-* Sensor de cor;
-* Potenciômetros;
-* Optoacoplador;
-* Regulador de tensão;
-* Capacitor;
-* Fonte colmeia 5V / 10A.
+Os dados do processo são enviados pelo ESP32 para o backend, que realiza o processamento e a comunicação com o banco de dados.
 
-## 🏗️ Estrutura e Fabricação
+Os dados armazenados podem ser consultados pelo frontend e utilizados pelo supervisório.
 
-* MDF;
-* Impressão 3D.
+## Objetivo
 
----
+O objetivo do projeto é demonstrar a integração entre automação industrial e tecnologia da informação utilizando microcontroladores, sensores, atuadores, banco de dados, sistemas web e supervisão industrial.
 
-# 🔄 Integração do Sistema
+O projeto aborda conceitos de:
 
-O projeto realiza a integração entre diferentes áreas da tecnologia.
+* Sistemas ciberfísicos
+* Internet das Coisas
+* Automação
+* Digitalização de processos
+* Integração entre máquinas e sistemas
+* Monitoramento industrial
 
-O processo físico é iniciado pelo braço robótico controlado pelo Arduino Uno.
-
-A peça é transportada até a esteira, controlada pelo ESP32.
-
-O sensor de cor identifica a característica da peça e o sistema realiza sua separação.
-
-As informações geradas pelo processo são enviadas pelo ESP32 para o backend.
-
-O backend processa essas informações e realiza a comunicação com o banco de dados.
-
-Os dados armazenados podem ser visualizados através do frontend e utilizados pelo sistema supervisório.
-
-Essa integração permite a conexão entre o ambiente físico e o ambiente digital.
-
----
-
-# 🚀 Objetivo do Projeto
-
-O principal objetivo deste projeto é desenvolver uma aplicação prática que demonstre a integração entre **automação industrial e tecnologia da informação**.
-
-O projeto busca conectar o ambiente físico da indústria com sistemas digitais, utilizando microcontroladores, sensores, atuadores, banco de dados, aplicações web e sistemas supervisórios.
-
-Através dessa integração, é possível demonstrar conceitos fundamentais da **Indústria 4.0**, como:
-
-* Sistemas ciberfísicos;
-* Internet das Coisas;
-* Automação inteligente;
-* Digitalização de processos;
-* Integração entre máquinas e sistemas;
-* Monitoramento industrial.
-
----
-
-# 👨‍💻 Autor
+## Autor
 
 **Guilherme Guimarães**
 
-Projeto desenvolvido como parte dos estudos e aplicações práticas envolvendo:
-
-> 🤖 Automação Industrial • 🌐 IoT • 💻 Desenvolvimento Web • 🏭 Indústria 4.0 • 📊 Sistemas Supervisórios
+Projeto desenvolvido para aplicação prática de conceitos de Automação Industrial, IoT, Desenvolvimento Web, Indústria 4.0 e Sistemas Supervisórios.

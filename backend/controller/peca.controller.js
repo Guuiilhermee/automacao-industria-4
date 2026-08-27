@@ -1,7 +1,6 @@
 const Peca = require('../models/Peca')
 const { Op } = require('sequelize')
 
-// Cadastrar ou Somar Peça via formulário web (ADM)
 const cadastrar = async (req, res) => {
     const valores = req.body || {}
 
@@ -47,7 +46,6 @@ const cadastrar = async (req, res) => {
     }
 }
 
-// Endpoint especial para o ESP32 enviar dados do Sensor de Cor (Soma no Banco de Dados)
 const processarEsp32 = async (req, res) => {
     const { cor, nome, tipo, quantidade } = req.body || {}
 
@@ -71,7 +69,7 @@ const processarEsp32 = async (req, res) => {
             pecaExistente.quantidade = Number(pecaExistente.quantidade) + qtdAdicionar
             pecaExistente.ativo = true
             await pecaExistente.save()
-            console.log(`🤖 ESP32 -> Peça [${corFormatada}] detectada! Nova quantidade total: ${pecaExistente.quantidade}`)
+            console.log(`ESP32 -> Peça [${corFormatada}] detectada! Nova quantidade total: ${pecaExistente.quantidade}`)
             return res.status(200).json({
                 status: 'sucesso',
                 message: `Sucesso: Quantidade de ${corFormatada} somada! Total: ${pecaExistente.quantidade}`,
@@ -85,7 +83,7 @@ const processarEsp32 = async (req, res) => {
                 quantidade: qtdAdicionar,
                 ativo: true
             })
-            console.log(`🤖 ESP32 -> Nova cor [${corFormatada}] registrada no banco!`)
+            console.log(`ESP32 -> Nova cor [${corFormatada}] registrada no banco!`)
             return res.status(201).json({
                 status: 'sucesso',
                 message: `Sucesso: Peça ${corFormatada} registrada no banco!`,
@@ -156,7 +154,6 @@ const atualizar = async (req, res) => {
     }
 }
 
-// Subtrai 1 unidade da quantidade da peça
 const apagar = async (req, res) => {
     const id = req.params.id
 
