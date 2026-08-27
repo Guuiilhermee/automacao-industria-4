@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderizarNavbar('dashboard')
     carregarDashboard()
 
-    // Atualização em tempo real (Polling a cada 3 segundos) para ler leituras do ESP32 automaticamente
+    // Atualização em tempo real (Polling a cada 3 segundos) para monitorar o ESP32
     intervaloAtualizacao = setInterval(carregarDashboard, 3000)
 })
 
@@ -83,22 +83,43 @@ function renderizarTabela(pecas) {
                 <td>${p.tipo}</td>
                 <td><span class="fw-semibold fs-6 text-primary">${p.quantidade}</span></td>
                 <td class="text-end">
-                    <a href="./attPeca.html?id=${p.codPeca}" class="btn btn-sm btn-outline-warning me-1" title="Editar">
+                    <a href="./attPeca.html?id=${p.codPeca}" class="btn btn-sm btn-outline-warning me-1" title="Editar / Alterar">
                         <i class="bi bi-pencil-square"></i>
                     </a>
-                    <a href="./delPeca.html?id=${p.codPeca}" class="btn btn-sm btn-outline-danger" title="Excluir">
-                        <i class="bi bi-trash"></i>
-                    </a>
+                    <button onclick="removerUmaUnidade(${p.codPeca}, '${p.cor}')" class="btn btn-sm btn-outline-danger" title="Remover 1 unidade (-1)">
+                        <i class="bi bi-trash"></i> -1
+                    </button>
                 </td>
             </tr>
         `
     })
 }
 
+function removerUmaUnidade(id, cor) {
+    if (!confirm(`Deseja subtrair 1 unidade da peça ${cor} (ID #${id}) diretamente do Dashboard?`)) {
+        return
+    }
+
+    const token = obterToken()
+    fetch(`http://localhost:3000/peca/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(res => res.json())
+    .then(dados => {
+        carregarDashboard()
+    })
+    .catch(err => {
+        console.error('Erro ao remover unidade pelo dashboard:', err)
+    })
+}
+
 function renderizarGrafico(pecas) {
     const ctx = document.getElementById('graficoPecas').getContext('2d')
 
-    // Agrupar quantidade por cor
     const coresQtd = {}
     pecas.forEach(p => {
         const cor = p.cor || 'Outra'
@@ -108,7 +129,6 @@ function renderizarGrafico(pecas) {
     const labels = Object.keys(coresQtd)
     const data = Object.values(coresQtd)
 
-    // Mapear cores para estilizar as barras
     const backgroundColors = labels.map(c => {
         const cLower = c.toLowerCase()
         if (cLower.includes('vermelh') || cLower.includes('red')) return 'rgba(220, 53, 69, 0.8)'
@@ -118,7 +138,6 @@ function renderizarGrafico(pecas) {
     })
 
     if (meuchart) {
-        // Atualizar dados no gráfico existente sem destruí-lo se a estrutura for a mesma
         meuchart.data.labels = labels.length ? labels : ['Sem Dados']
         meuchart.data.datasets[0].data = data.length ? data : [0]
         meuchart.data.datasets[0].backgroundColor = backgroundColors.length ? backgroundColors : ['rgba(108, 117, 125, 0.8)']
