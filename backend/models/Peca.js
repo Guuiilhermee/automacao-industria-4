@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize')
 const db = require('../db/conn')
 
-const Peca = db.define('peca',{
+const Peca = db.define('peca', {
     codPeca: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -23,8 +23,13 @@ const Peca = db.define('peca',{
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0
+    },
+    ativo: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
     }
-},{
+}, {
     timestamps: false,
     tableName: 'peca'
 })

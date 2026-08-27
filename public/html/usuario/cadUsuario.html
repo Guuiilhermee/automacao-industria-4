@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Automação Indústria 4.0</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body class="bg-light">
+    <div id="navbar-container"></div>
+
+    <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-person-plus text-primary display-4"></i>
+                            <h2 class="fw-bold mt-2">Criar Conta Padrão</h2>
+                            <p class="text-muted">Cadastre-se para consultar peças e acompanhar o sistema</p>
+                        </div>
+
+                        <form id="form_registro">
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">Nome Completo</label>
+                                <input type="text" class="form-control" id="nome" placeholder="Digite seu nome" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" id="email" placeholder="seu@email.com" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="senha" class="form-label">Senha</label>
+                                <input type="password" class="form-control" id="senha" placeholder="Crie uma senha" required>
+                            </div>
+
+                            <button type="submit" id="btn_cadastrar" class="btn btn-primary w-100 py-2 fw-semibold">
+                                Finalizar Cadastro
+                            </button>
+                        </form>
+
+                        <div id="resposta" class="mt-3"></div>
+
+                        <div class="text-center mt-4 border-top pt-3">
+                            <a href="/html/index.html" class="btn btn-link text-decoration-none">Já tem uma conta? Faça login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/usuario_js/register_user.js"></script>
+</body>
+</html>

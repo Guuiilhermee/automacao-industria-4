@@ -1,33 +1,70 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const path = require('path')
+const bcrypt = require('bcryptjs')
 
 const PORT = 3000
 const hostname = 'localhost'
 
 const conn = require('./db/conn')
 
-const pecaController = require('./controller/peca.controller')
+// Importar Models para o Sequelize registrar e sincronizar
+const Peca = require('./models/Peca')
+const Usuario = require('./models/Usuario')
 
-// MIDDLEWARE
-app.use(express.urlencoded({extended: true}))
+// Importar Rotas Organizadas
+const pecaRoutes = require('./routes/peca.routes')
+const usuarioRoutes = require('./routes/usuario.routes')
+
+// MIDDLEWARES DE CORS E PARSER
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(cors())
+
+// Servir arquivos estáticos do frontend
+app.use(express.static(path.join(__dirname, '../public')))
 
 // ROTAS
-app.post('/peca', pecaController.cadastrar)
-app.get('/pecas', pecaController.listar)
-app.get('/peca/:id', pecaController.consultar)
-app.put('/peca/:id', pecaController.atualizar)
-app.delete('/peca/:id', pecaController.apagar)
+app.use('/', pecaRoutes)
+app.use('/usuario', usuarioRoutes)
 
-// SERVER
-conn.sync()
-.then(()=>{
-    app.listen(PORT, hostname, ()=>{
+// Função para garantir que sempre exista ao menos 1 ADM ao iniciar o banco pela primeira vez
+const criarAdmInicialSeNaoExistir = async () => {
+    try {
+        const totalAdm = await Usuario.count({ where: { tipoUsuario: 'adm' } })
+        if (totalAdm === 0) {
+            const senhaHash = await bcrypt.hash('admin123', 10)
+            await Usuario.create({
+                nome: 'Administrador Inicial',
+                email: 'admin@admin.com',
+                senha: senhaHash,
+                tipoUsuario: 'adm'
+            })
+            console.log('==================================================')
+            console.log('🔑 Administrador inicial criado automaticamente:')
+            console.log('📧 E-mail: admin@admin.com')
+            console.log('🔑 Senha:  admin123')
+            console.log('==================================================')
+        }
+    } catch (err) {
+        console.error('Erro ao verificar/criar administrador inicial:', err.message || err)
+    }
+}
+
+// SERVER & DB SYNC
+conn.sync({ alter: true })
+.then(async () => {
+    console.log('Tabelas (peca e usuario) sincronizadas com sucesso no MySQL!')
+    await criarAdmInicialSeNaoExistir()
+    app.listen(PORT, hostname, () => {
         console.log(`Servidor rodando em http://${hostname}:${PORT}`)
     })
 })
-.catch((err)=>{
-    console.log('Erro de conexão com o bando de dados!',err.message || err)
+.catch((err) => {
+    console.log('Erro de conexão/sincronização com o banco de dados:', err.message || err)
 })
