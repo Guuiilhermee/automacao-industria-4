@@ -1,4 +1,4 @@
-// Utilitário de Autenticação e Controle de Sessão no Frontend
+// Autenticação
 
 function obterToken() {
     return localStorage.getItem('token')
@@ -66,7 +66,6 @@ function renderizarNavbar(paginaAtual = '') {
             `
         }
 
-        // Itens comuns (para todos os usuários logados)
         navItems += `
             <li class="nav-item">
                 <a class="nav-link ${paginaAtual === 'listar' ? 'active' : ''}" href="/html/pecas/listarPeca.html">Listar Peças</a>

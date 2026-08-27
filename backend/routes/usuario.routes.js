@@ -3,16 +3,16 @@ const router = express.Router()
 const usuarioController = require('../controller/usuario.controller')
 const { autenticarToken, autorizarAdm } = require('../middleware/auth.middleware')
 
-// Auto-registro para usuário padrão
+// Usuário padrão
 router.post('/registro', usuarioController.cadastrarPadrao)
 
-// Registro de administrador (apenas ADM autenticado)
+// ADM
 router.post('/registro-adm', autenticarToken, autorizarAdm, usuarioController.cadastrarAdm)
 
 // Login
 router.post('/login', usuarioController.login)
 
-// Dados do usuário logado
+// User
 router.get('/me', autenticarToken, usuarioController.me)
 
 module.exports = router

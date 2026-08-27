@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderizarNavbar('dashboard')
     carregarDashboard()
 
-    // Atualização em tempo real (Polling a cada 3 segundos) para monitorar o ESP32
+    // Monitorar o ESP32
     intervaloAtualizacao = setInterval(carregarDashboard, 3000)
 })
 
