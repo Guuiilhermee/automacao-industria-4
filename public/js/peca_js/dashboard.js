@@ -83,11 +83,11 @@ function renderizarTabela(pecas) {
                 <td>${p.tipo}</td>
                 <td><span class="fw-semibold fs-6 text-primary">${p.quantidade}</span></td>
                 <td class="text-end">
-                    <a href="./attPeca.html?id=${p.codPeca}" class="btn btn-sm btn-outline-warning me-1" title="Editar / Alterar">
-                        <i class="bi bi-pencil-square"></i>
+                    <a href="${obterCaminho('/html/pecas/attPeca.html')}?id=${p.codPeca}" class="btn btn-sm btn-outline-warning me-1">
+                        Editar
                     </a>
-                    <button onclick="removerUmaUnidade(${p.codPeca}, '${p.cor}')" class="btn btn-sm btn-outline-danger" title="Remover 1 unidade (-1)">
-                        <i class="bi bi-trash"></i> -1
+                    <button onclick="removerUmaUnidade(${p.codPeca}, '${p.cor}')" class="btn btn-sm btn-outline-danger">
+                        -1
                     </button>
                 </td>
             </tr>

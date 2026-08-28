@@ -31,9 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 setTimeout(() => {
                     if (res.body.usuario.tipoUsuario === 'adm') {
-                        window.location.href = '/html/pecas/dashboard.html'
+                        window.location.href = obterCaminho('/html/pecas/dashboard.html')
                     } else {
-                        window.location.href = '/html/pecas/listarPeca.html'
+                        window.location.href = obterCaminho('/html/pecas/listarPeca.html')
                     }
                 }, 1000)
             } else {

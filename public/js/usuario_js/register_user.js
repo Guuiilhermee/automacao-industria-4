@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 resposta.innerHTML = `<div class="alert alert-success">${res.body.message} Redirecionando para login...</div>`
                 formRegistro.reset()
                 setTimeout(() => {
-                    window.location.href = '/html/index.html'
+                    window.location.href = obterCaminho('/html/index.html')
                 }, 1500)
             } else {
                 resposta.innerHTML = `<div class="alert alert-danger">${res.body.message || 'Erro ao realizar cadastro!'}</div>`

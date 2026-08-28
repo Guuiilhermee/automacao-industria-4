@@ -25,6 +25,7 @@ app.use(express.json())
 
 // Frontend
 app.use(express.static(path.join(__dirname, '../public')))
+app.use('/public', express.static(path.join(__dirname, '../public')))
 
 // ROTAS
 app.use('/', pecaRoutes)
