@@ -42,11 +42,11 @@ const criarAdmInicialSeNaoExistir = async () => {
                 senha: senhaHash,
                 tipoUsuario: 'adm'
             })
-            console.log('==================================================')
-            console.log('Administrador inicial criado automaticamente:')
-            console.log('E-mail: admin@admin.com')
-            console.log('Senha:  admin123')
-            console.log('==================================================')
+            // console.log('==================================================')
+            // console.log('Administrador inicial criado automaticamente:')
+            // console.log('E-mail: admin@admin.com')
+            // console.log('Senha:  admin123')
+            // console.log('==================================================')
         }
     } catch (err) {
         console.error('Erro ao verificar/criar administrador inicial:', err.message || err)
