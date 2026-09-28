@@ -47,7 +47,10 @@ const cadastrar = async (req, res) => {
 }
 
 const processarEsp32 = async (req, res) => {
-    const { cor, nome, tipo, quantidade } = req.body || {}
+    const cor = req.body?.cor || req.query?.cor
+    const nome = req.body?.nome || req.query?.nome
+    const tipo = req.body?.tipo || req.query?.tipo
+    const quantidade = req.body?.quantidade || req.query?.quantidade
 
     if (!cor) {
         return res.status(400).json({ message: 'Parâmetro "cor" é obrigatório para o ESP32!' })

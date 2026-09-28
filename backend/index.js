@@ -5,7 +5,7 @@ const path = require('path')
 const bcrypt = require('bcryptjs')
 
 const PORT = 3000
-const hostname = 'localhost'
+const hostname = '0.0.0.0'
 const conn = require('./db/conn')
 
 const Peca = require('./models/Peca')
